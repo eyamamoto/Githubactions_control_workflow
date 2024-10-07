@@ -14,9 +14,11 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: node_modules #~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        #so executa se não conseguir acessar o cache
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Lint code
         run: npm run lint
@@ -29,9 +31,11 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: node_modules #~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        #so executa se não conseguir acessar o cache
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Test code
         #id pode ser usado para condicional
@@ -54,9 +58,11 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: node_modules #~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        #so executa se não conseguir acessar o cache
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Build website
         id: build-website
@@ -79,6 +85,7 @@ jobs:
       - name: Deploy
         run: echo "Deploying..."
   report:
+    #necessario adicionar dependencia dos jobs que precisam ou não falhar
     needs: [lint, deploy]
     if: failure()
     runs-on: ubuntu-latest
