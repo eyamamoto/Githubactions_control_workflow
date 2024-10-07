@@ -7,6 +7,13 @@ jobs:
       matrix:
         node-version: [12,14,16]
         operating-system: [ubuntu-latest, windows-latest]
+        include: #includes adiciona novas combinações 
+          - node-version: 18
+            operating-system: ubuntu-latest
+        exclude: #exclui da execução a versão 12 no windows-latest
+          - node-version: 12
+            oerating-system: windows-latest
+        
      #roda em todos os sistemas operacionais citados acima no matrix strategy   
     runs-on: ${{ matrix.operating-system }}
     steps:
