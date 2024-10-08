@@ -76,6 +76,8 @@ jobs:
     needs: build
     #chama um arquivo de workflow reutilizavel
     uses: ./.github/workflows/reusable.yml
+    with: 
+      artifact-name: dist-files
   report:
     #necessario adicionar dependencia dos jobs que precisam ou não falhar
     needs: [lint, deploy]
