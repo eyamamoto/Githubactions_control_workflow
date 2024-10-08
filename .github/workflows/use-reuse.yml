@@ -74,6 +74,7 @@ jobs:
           path: dist
   deploy:
     needs: build
+    #chama um arquivo de workflow reutilizavel
     uses: ./.github/workflows/reusable.yml
   report:
     #necessario adicionar dependencia dos jobs que precisam ou não falhar
